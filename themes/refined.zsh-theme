@@ -28,6 +28,20 @@ setopt prompt_subst
 #
 autoload -Uz vcs_info
 
+# Xterm_256color_chart
+#
+export TERM="xterm-256color"
+#
+xterm() {
+    for i in {0..255} ; do
+            printf "\x1b[48;5;%sm%3d\e[0m " "$i" "$i"
+            if (( i==15)) || (( i>15 )) && (( (i-15) % 6 == 0)); then
+                    printf "\n";
+            fi
+    done
+}
+# https://upload.wikimedia.org/wikipedia/commons/1/15/Xterm_256color_chart.svg
+
 # Set vcs_info parameters
 #
 zstyle ':vcs_info:*' enable hg bzr git
@@ -49,7 +63,7 @@ git_dirty() {
 # Display information about the current repository
 #
 repo_information() {
-    echo "%F{blue}${vcs_info_msg_0_%%/.} %F{8}$vcs_info_msg_1_`git_dirty` $vcs_info_msg_2_%f"
+    echo "%F{210}%B%~ %F{37}${vcs_info_msg_0_%%/.} %F{7}$vcs_info_msg_1_`git_dirty` $vcs_info_msg_2_%f"
 }
 
 # Displays the exec time of the last command if set threshold was exceeded
@@ -71,12 +85,13 @@ preexec() {
 #
 precmd() {
     vcs_info # Get version control info before we start outputting stuff
-    print -P "\n$(repo_information) %F{yellow}$(cmd_exec_time)%f"
+#    print -P "\n%F{green}%B------------------------%f\n\n$(repo_information) %F{yellow}$(cmd_exec_time)%f"
+     print -P "%F{green}%B________________________%f\n\n$(repo_information) %F{yellow}$(cmd_exec_time)%f"
 }
 
 # Define prompts
 #
-PROMPT="%(?.%F{magenta}.%F{red})❯%f " # Display a red prompt char on failure
+PROMPT="%(?.%F{13}.%F{red})❯%f " # Display a red prompt char on failure
 RPROMPT="%F{8}${SSH_TTY:+%n@%m}%f"    # Display username if connected via SSH
 
 # ------------------------------------------------------------------------------
