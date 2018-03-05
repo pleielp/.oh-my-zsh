@@ -1,3 +1,12 @@
+install alias-tips plugin at ~/.oh-my-zsh/custom/plugins/
+> git clone https://github.com/djui/alias-tips.git
+and modify ~/.zshrc
+> plugins=(
+>   .. alias-tips
+> )
+
+***
+
 <p align="center">
   <img src="https://s3.amazonaws.com/ohmyzsh/oh-my-zsh-logo.png" alt="Oh My Zsh">
 </p>
