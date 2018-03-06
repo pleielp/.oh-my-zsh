@@ -1,9 +1,64 @@
-install alias-tips plugin at ~/.oh-my-zsh/custom/plugins/
-> git clone https://github.com/djui/alias-tips.git
+## Install alias-tips plugin.
+
+install at ~/.oh-my-zsh/custom/plugins/
+
+```shell
+git clone https://github.com/djui/alias-tips.git
+```
+
 and modify ~/.zshrc
-> plugins=(
->   .. alias-tips
-> )
+
+```
+plugins=(
+  .. alias-tips
+)
+```
+
+***
+
+## Decorate terminal.
+
+at ~/.oh-my-zsh/themes/refined.zsh-theme
+
+add environmental variable
+
+```
+export TERM="xterm-256color"
+```
+modify funciton repo_information()
+
+```
+repo_information() {
+    echo "%F{210}%B%~ %F{37}${vcs_info_msg_0_%%/.} %F{7}$vcs_info_msg_1_`git_dirty` $vcs_info_msg_2_%f"
+}
+```
+modify function precmd()
+
+```
+precmd() {
+    ..
+
+     print -P "%F{green}%B________________________%f\n\n$(repo_information) %F{yellow}$(cmd_exec_time)%f"
+}
+```
+
+modify PROMPT
+
+```
+PROMPT="%(?.%F{13}.%F{red})❯%f "
+```
+
+Add function (for reference of 256colors)
+```
+xterm() {
+    for i in {0..255} ; do
+            printf "\x1b[48;5;%sm%3d\e[0m " "$i" "$i"
+            if (( i==15)) || (( i>15 )) && (( (i-15) % 6 == 0)); then
+                    printf "\n";
+            fi
+    done
+}
+```
 
 ***
 
